@@ -14,13 +14,16 @@ export class RegisterComponent  {
   userNameHint:string =" ex: Username0599 ";
   passWordHint:string =" ex: pass123 ";
 
-  fullName:string = "";
+  @Input() fullName:string = "";
   @Input() userName:string ="";
   @Input() email:string=""
   @Input() passWord:string ="";
   
   addNewUser=() => {
     console.log(this.fullName)
+    console.log(this.userName)
+    console.log(this.email)
+    console.log(this.passWord)
   }
 
 }
