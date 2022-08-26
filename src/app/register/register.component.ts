@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent  {
 
   constructor() { }
 
-  ngOnInit(): void {
+  fullNameHint:string = "ex: Daniel Hernandez Sanchez";
+  emailHint:string="ex yourmail@gmail.com"
+  userNameHint:string =" ex: Username0599 ";
+  passWordHint:string =" ex: pass123 ";
+
+  fullName:string = "";
+  @Input() userName:string ="";
+  @Input() email:string=""
+  @Input() passWord:string ="";
+  
+  addNewUser=() => {
+    console.log(this.fullName)
   }
 
 }
