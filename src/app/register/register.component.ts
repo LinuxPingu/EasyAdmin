@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import User from '../interfaces/user.interface';
 import { FirebaseService } from '../services/firebase.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -30,16 +31,49 @@ export class RegisterComponent  {
   userNameHint:string =" ex: Username0599 ";
   passWordHint:string =" ex: pass123 ";
 
-  buildNewUser =() =>{
-    this.newUser.username = this.fullName;
-    this.newUser.username = this.userName;
-    this.newUser.userEmail = this.email;
-    this.newUser.userPassword = this.passWord;
+  buildNewUser =():boolean =>{
+    
+   let allSet:boolean = false;
+
+    if(this.fullName !== "" && this.userName !== "" && this.userName !== "" && this.email !== ""){
+      this.newUser.username = this.fullName;
+      this.newUser.username = this.userName;
+      this.newUser.userEmail = this.email;
+      this.newUser.userPassword = this.passWord;
+      allSet = true;
+    }
+
+    return allSet;
   }
   
   addNewUser=() => { 
-    this.buildNewUser();
-    this.fireBaseService.addNewUser(this.newUser);
+    let allSet:boolean = this.buildNewUser();
+
+    if(allSet){
+      try {
+        this.fireBaseService.addNewUser(this.newUser);
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: `User ${this.userName} created! `,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
+      }
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Not all values are set!',
+      })
+    }
   }
 
 }
