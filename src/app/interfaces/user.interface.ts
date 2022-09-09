@@ -3,4 +3,5 @@ export default interface User{
     userEmail:string;
     userPassword:string;
     username:string;
+    fullName:string;
 }
