@@ -4,4 +4,5 @@ export default interface User{
     userPassword:string;
     username:string;
     fullName:string;
+    isAdmin:boolean
 }
