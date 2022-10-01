@@ -12,13 +12,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { NavbarComponent } from './landing-page/navbar/navbar.component';
+import { CondosComponent } from './condos/condos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    NavbarComponent,
+    CondosComponent
   ],
   imports: [
     BrowserModule,

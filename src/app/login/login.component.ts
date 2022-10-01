@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { FirebaseService } from '../services/firebase.service';
 import Swal from 'sweetalert2';
 import User from '../interfaces/user.interface';
+import { AppInfoService } from "../services/appInfo.service";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -10,7 +12,7 @@ import User from '../interfaces/user.interface';
 })
 export class LoginComponent  {
 
-  constructor(private router:Router, private firebaseService: FirebaseService) {
+  constructor(private router:Router, private firebaseService: FirebaseService, private appInfo:AppInfoService) {
 
    }
    
@@ -27,12 +29,13 @@ export class LoginComponent  {
     async loginUser () {
       console.log(this.email);
       console.log(this.password);
+
       if(this.email !== "" && this.password !== ""){
        let userPromise:Promise<User> = this.firebaseService.getUserByEmail(this.email);
        await this.setUserData(userPromise);
-       
         if(this.user.userEmail !== ""){
           if(this.user.userPassword === this.password){
+            this.appInfo.set_current_user(this.user);
             this.router.navigate(['/landing-page'])
           }else{
             Swal.fire({
@@ -68,7 +71,7 @@ export class LoginComponent  {
         this.user.userPassword = data.userPassword
         this.user.isAdmin = data.isAdmin;
        });
-    
+       
     }
 
     goRegister(){
