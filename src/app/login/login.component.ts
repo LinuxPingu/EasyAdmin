@@ -23,6 +23,7 @@ export class LoginComponent  {
     userPassword: "",
     username: "",
     fullName: "",
+    userID: "",
     isAdmin: false
    };
 

@@ -23,7 +23,8 @@ export class FirebaseService {
       userPassword: "",
       username: "",
       fullName: "",
-      isAdmin: false
+      isAdmin: false,
+      userID: ''
     };
 
     const userRef = collection(this.firestore,'users');

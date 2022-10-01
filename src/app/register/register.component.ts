@@ -24,7 +24,8 @@ export class RegisterComponent  {
     userPassword: "",
     username: "",
     fullName: "",
-    isAdmin: false
+    isAdmin: false,
+    userID: ''
   };
 
   fullNameHint:string = "ex: Daniel Hernandez Sanchez";

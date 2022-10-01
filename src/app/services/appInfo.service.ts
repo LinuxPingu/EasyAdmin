@@ -9,11 +9,12 @@ export class AppInfoService {
   constructor() { }
 
    private current_user:User ={
-    userEmail: "",
-    userPassword: "",
-    username: "",
-    fullName: "",
-    isAdmin: false
+     userEmail: "",
+     userPassword: "",
+     username: "",
+     fullName: "",
+     isAdmin: false,
+     userID: ''
    };
 
    public set_current_user(user:User){

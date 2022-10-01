@@ -17,6 +17,10 @@ const routes: Routes=[
   {
     path:'landing-page',
     component: LandingPageComponent
+  },
+  {
+    path:'condos',
+    loadChildren:() => import('./condos/condos.module').then(m => m.CondosModule)
   }
 ];
 
