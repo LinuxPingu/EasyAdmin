@@ -1,2 +1,42 @@
 <app-global-navbar></app-global-navbar>
-<app-condos-list></app-condos-list>
+
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <app-condos-list></app-condos-list>
+      </div>
+      <div *ngIf="!isEditing" class="col miniCol">
+        <h2 class="centertxt"> Create a Condo </h2>
+        <form #contactForm="ngForm" (ngSubmit)="createCondo(contactForm)">
+            <div class="mb-4">
+                <label for="name" class="form-label"> Condo name: </label>
+                <input id="name" type="text" class="form-control" name="name" [(ngModel)]="model.name" required #name="ngModel">
+                <p [hidden]="name.valid || name.pristine" class="alert alert-danger nt-1"> This space it's required</p>
+             </div>
+             <div class="mb-4">
+                <label for="email" class="form-label"> Condo email: </label>
+                <input id="email" type="text" class="form-control" name="email" [(ngModel)]="model.email" required #email="ngModel">
+                <p [hidden]="email.valid || email.pristine" class="alert alert-danger nt-1"> This space it's required</p>
+             </div>
+             <div class="mb-4">
+                <label for="phone" class="form-label"> Condo phone: </label>
+                <input id="phone" type="text" class="form-control" name="phone" [(ngModel)]="model.phone"  required #phone="ngModel">
+                <p [hidden]="phone.valid || phone.pristine" class="alert alert-danger nt-1"> This space it's required</p>
+             </div>
+             <div class="mb-4">
+                <label for="location" class="form-label"> Condo location: </label>
+                <input id="location" type="text" class="form-control" name="location" [(ngModel)]="model.location" required #location="ngModel">
+                <p [hidden]="location.valid || location.pristine" class="alert alert-danger nt-1"> This space it's required</p>
+             </div>
+             <div style="text-align: center;">
+                <button class="btn btn-primary" style="background-color: #329950; margin-top: 30px;" type="submit" [disabled]="contactForm.invalid"><i class="fa-solid fa-plus"></i> Add new Condo </button>
+             </div>
+        </form>
+      </div>
+      <div *ngIf="isEditing" class="col miniCol">
+        <h2 class="centertxt"> Editing </h2>
+      </div>
+  </div>
+
+
+

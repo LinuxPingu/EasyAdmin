@@ -3,10 +3,10 @@ import { Firestore, addDoc, collectionData} from '@angular/fire/firestore';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { collection, query, where, getDocs, doc, getDoc  } from "firebase/firestore";
 import { object } from 'rxfire/database';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Condo } from '../interfaces/condo.interface';
 import User from '../interfaces/user.interface';
-
+import { convertSnaps } from './db-utils';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +43,17 @@ export class CondosServiceService {
       condos.push(found)
     });
     return condos
-  } 
+  }
+  
+    refreshList = new Observable<Condo[]>((observer) =>{
+     let condos:Condo[] = []
+     let uid = localStorage.getItem('current-user')
+     if(uid != null){
+      let promise:Promise<Condo[]> = this.get_user_condos(uid); 
+     }
+   })
 
+   findAll(owner:string): Observable<Condo[]>{
+    return this.angularFs.collection('condos', ref => ref.where('owner_id','==',owner)).get().pipe(map(result =>convertSnaps<Condo>(result)));
+   }
 }

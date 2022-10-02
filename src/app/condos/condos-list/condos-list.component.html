@@ -1,1 +1,41 @@
-<p>condos-list works!</p>
+<div class="container-fluid">
+    <div *ngIf="user_condos.length > 0" >
+        <table class="table table-striped" style="width: 100%;">
+            <thead>
+            <tr>
+              <th scope="col">Condo ID</th>
+              <th scope="col">Condo</th>
+              <th scope="col">Area</th>
+              <th scope="col">Is Active</th>
+              <th scope="col">Manage</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let condo of user_condos; index as i">
+              <th scope="row">{{ condo.condoID }}</th>
+              <td>
+                {{ condo.name }}
+              </td>
+              <td>{{ condo.location}}</td>
+              <td *ngIf="condo.isActive" style="text-align: center;"> <i class="fa-sharp fa-solid fa-check"></i> </td>
+              <td *ngIf="!condo.isActive" style="text-align: center;"> <i class="fa-solid fa-xmark"></i> </td>
+              <td> 
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col">
+                      <button style="width: 100%; background-color: #f5bf49;" ><i class="fa-solid fa-pencil"></i></button>
+                    </div>
+                    <div class="col">
+                      <button style="width: 100%; background-color: #ff3526;"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+    </div>
+    <div *ngIf="user_condos.length === 0">
+        <h3 class="centertxt">Looks like nothing is here!</h3>
+    </div>
+</div>

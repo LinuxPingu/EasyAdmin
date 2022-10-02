@@ -4,7 +4,7 @@ import { CondosRoutingModule } from './condos-routing.module';
 import { CondosListComponent } from './condos-list/condos-list.component';
 import { MyCondosComponent } from './my-condos/my-condos.component';
 import { NavbarModule } from '../shared/navbar.module';
-
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     MyCondosComponent,
@@ -13,7 +13,8 @@ import { NavbarModule } from '../shared/navbar.module';
   imports: [
     CommonModule,
     CondosRoutingModule,
-    NavbarModule
+    NavbarModule,
+    FormsModule
   ]
 })
 export class CondosModule { }

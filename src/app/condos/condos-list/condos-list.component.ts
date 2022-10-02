@@ -4,6 +4,8 @@ import { Condo } from 'src/app/interfaces/condo.interface';
 import User from 'src/app/interfaces/user.interface';
 import { AppInfoService } from 'src/app/services/appInfo.service';
 import { ThisReceiver } from '@angular/compiler';
+import { interval, Observable } from 'rxjs';
+
 @Component({
   selector: 'app-condos-list',
   templateUrl: './condos-list.component.html',
@@ -15,9 +17,22 @@ export class CondosListComponent implements OnInit {
 
   public user_condos:Condo[]=[];
 
-  async ngOnInit() {   
-    await this.setUserData(this.condo_service.get_user_condos("cgxZMeIanqzCwTkBUasy"))
-    await console.log(this.user_condos)
+  public sub = interval(3000).subscribe(x =>{
+    let uid = localStorage.getItem('current-user')
+    if(uid != null){
+     this.condo_service.findAll(uid).subscribe((val) => { console.log(val); this.user_condos = val})
+    }
+  });
+
+  async ngOnInit() { 
+    let uid = localStorage.getItem('current-user')
+    if(uid != null){
+      await this.setUserData(this.condo_service.get_user_condos(uid))
+      await console.log(this.user_condos)
+    }  
+  }
+  public ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   async setUserData (promise:Promise<Condo[]>){
