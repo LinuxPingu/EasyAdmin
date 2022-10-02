@@ -36,8 +36,11 @@ export class LoginComponent  {
        let userPromise:Promise<User> = this.firebaseService.getUserByEmail(this.email);
        await this.setUserData(userPromise);
         if(this.user.userEmail !== ""){
-          if(this.user.userPassword === this.password){  
-            localStorage.setItem('current-user',this.user.userID);
+          if(this.user.userPassword === this.password){ 
+            if(this.user.userID != null){
+              localStorage.setItem('current-user',this.user.userID);
+              localStorage.setItem('current-user-mail',this.user.userEmail);
+            } 
             this.router.navigate(['/landing-page'],{state:{data: this.user}})
           }else{
             Swal.fire({

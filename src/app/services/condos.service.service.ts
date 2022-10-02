@@ -38,7 +38,7 @@ export class CondosServiceService {
         name:  doc.get('name'),
         owner_id: doc.get('owner_id'),
         phone: doc.get('phone'),
-        condoID: doc.id.toString()
+        id: doc.id.toString()
       }
       condos.push(found)
     });

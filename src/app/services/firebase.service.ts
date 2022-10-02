@@ -23,8 +23,7 @@ export class FirebaseService {
       userPassword: "",
       username: "",
       fullName: "",
-      isAdmin: false,
-      userID: ''
+      isAdmin: false
     };
 
     const userRef = collection(this.firestore,'users');
@@ -48,7 +47,5 @@ export class FirebaseService {
     const userRef = collection(this.firestore,'users');
     return collectionData(userRef,{idField:'userID'}) as Observable<User[]>;
   }
-
-  
 
 }

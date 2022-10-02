@@ -1,5 +1,5 @@
 export interface Condo {
-    condoID: string;
+    id?: string;
     email:string;
     isActive:boolean;
     location:string;
