@@ -65,7 +65,11 @@ export class MyServicesComponent implements OnInit {
     })
    }
   }
- 
+
+  editService(name:string, condo:Condo){
+
+  }
+  
    deleteService(name:string, condo:Condo){
      console.log(`Here! ${name} and ${condo.id}`)
      try {

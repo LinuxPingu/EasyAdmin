@@ -124,6 +124,20 @@ export class CondoServicesService {
      })
    }
 
+   get_service_id(name:string,condo:Condo):string{
+     let id:string =""
+     let prom = this.set_document_id(name,condo)
+     prom.then((x)=>{
+        id = x.service_id
+     })
+     return id;
+   }
+
+   edit_service(service_name:string,condo:Condo,new_Values:ServiceInterface){
+     const tutorialsRef = this.angularFs.collection('services');
+     tutorialsRef.doc(this.get_service_id(service_name,condo)).update({ name: 'this a test of edit' });
+   }
+
    get_current_services(owner:string):Observable<CondoServiceItemInterface[]>{
      this.build_user_data(owner);
      return of(this.service_items)
