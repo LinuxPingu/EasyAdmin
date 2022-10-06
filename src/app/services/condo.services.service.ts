@@ -47,7 +47,7 @@ export class CondoServicesService {
         console.log(service)
       }
    });
-   
+
    return service;
   }
 
@@ -82,10 +82,46 @@ export class CondoServicesService {
      this.service_items=[]
    }
 
+   async set_document_id(name:string,condo:Condo):Promise<ServiceInterface>{
+    let completed_service:ServiceInterface = {
+      service_id: '',
+      condo_id: '',
+      type_of_service: '',
+      name: '',
+      email: '',
+      phone: '',
+      is_all_day: false,
+      starts: '',
+      ends: ''
+    }
+    
+    const q = query(collection(this.firestore,'services'),where('condo_id','==',condo.id),where('name','==',name))
+    const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+      if(doc.get('name') === name && doc.get('condo_id') === condo.id){
+        completed_service.service_id = doc.id.toString();
+        completed_service.condo_id = doc.get('condo_id');
+        completed_service.type_of_service = doc.get('type_of_service');
+        completed_service.name = doc.get('name');
+        completed_service.email = doc.get('email');
+        completed_service.phone = doc.get('phone');
+        completed_service.is_all_day = doc.get('is_all_day');
+        completed_service.starts = doc.get('starts');
+        completed_service.ends = doc.get('ends');
+        console.log("Completed service!")
+        console.log(completed_service);
+      }
+   });
+    return completed_service   
+   }
 
-   delete_service(id:string){
-    const serviceDocRef = doc(this.firestore,`services/${id}`)
-    return deleteDoc(serviceDocRef);
+   delete_service(name:string,condo:Condo){
+     let prom = this.set_document_id(name,condo)
+     prom.then((val)=>{
+       console.log(`the id of ${name} is ${val.service_id}`)
+       const condoDocRef = doc(this.firestore,`services/${val.service_id}`)
+       return deleteDoc(condoDocRef);
+     })
    }
 
    get_current_services(owner:string):Observable<CondoServiceItemInterface[]>{

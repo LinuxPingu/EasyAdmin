@@ -7,6 +7,7 @@ import { map, Observable } from 'rxjs';
 import { Condo } from '../interfaces/condo.interface';
 import User from '../interfaces/user.interface';
 import { convertSnaps } from './db-utils';
+import { ServiceInterface } from '../interfaces/service.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -53,11 +54,11 @@ export class CondosServiceService {
      }
    })
 
+
    delete_Condo(id:string){
       const condoDocRef = doc(this.firestore,`condos/${id}`)
       return deleteDoc(condoDocRef);
    }
-
 
    findAll(owner:string): Observable<Condo[]>{
     return this.angularFs.collection('condos', ref => ref.where('owner_id','==',owner)).get().pipe(map(result =>convertSnaps<Condo>(result)));

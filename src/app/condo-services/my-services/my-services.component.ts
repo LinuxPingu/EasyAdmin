@@ -66,29 +66,28 @@ export class MyServicesComponent implements OnInit {
    }
   }
  
-  deleteService(service_id?:string){
-    if(service_id != null){
+   deleteService(name:string, condo:Condo){
+     console.log(`Here! ${name} and ${condo.id}`)
      try {
-       this.condo_service.delete_Condo(service_id);
+       this.condos_services.delete_service(name,condo);
        Swal.fire({
-         position: 'center',
-         icon: 'success',
-         title: `Condo ${service_id} deleted! `,
-         showConfirmButton: false,
-         timer: 1500
+        position: 'center',
+        icon: 'success',
+        title: `Service ${name} deleted! `,
+        showConfirmButton: false,
+        timer: 1500
        })
      } catch (error) {
-       Swal.fire({
-         icon: 'error',
-         title: 'Oops...',
-         text: 'Something went wrong!',
-       })
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
      }
-    }
    }
 
-  public ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
+   public ngOnDestroy() {
+     this.sub.unsubscribe();
+   }
   
 }
