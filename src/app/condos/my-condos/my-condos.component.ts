@@ -40,7 +40,11 @@ export class MyCondosComponent implements OnInit {
         })
       }
     } catch (error) {
-      
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
     }
   }
 }

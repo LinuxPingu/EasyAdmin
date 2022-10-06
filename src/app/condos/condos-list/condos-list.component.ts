@@ -3,8 +3,9 @@ import { CondosServiceService } from 'src/app/services/condos.service.service';
 import { Condo } from 'src/app/interfaces/condo.interface';
 import User from 'src/app/interfaces/user.interface';
 import { AppInfoService } from 'src/app/services/appInfo.service';
-import { ThisReceiver } from '@angular/compiler';
+import { IfStmt, ThisReceiver } from '@angular/compiler';
 import { interval, Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-condos-list',
@@ -33,6 +34,27 @@ export class CondosListComponent implements OnInit {
   }
   public ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  deleteCondo(condo_id?:string){
+   if(condo_id != null){
+    try {
+      this.condo_service.delete_Condo(condo_id);
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `Condo ${condo_id} deleted! `,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+    }
+   }
   }
 
   async setUserData (promise:Promise<Condo[]>){

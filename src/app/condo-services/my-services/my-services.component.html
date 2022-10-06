@@ -1,0 +1,34 @@
+<app-global-navbar></app-global-navbar>
+<div class="container">
+    <div class="row">
+      <div class="col">
+            <h2> All my services </h2>
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Discipline</th>
+                  <th>Course</th>
+                  <th>Classes</th>
+                  <th>Students</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of service_by_hash">
+                  <tr>
+                    <td>{{item.condo.name}}</td>
+                  </tr>
+                  <tr *ngFor="let service of item.services">
+                    <td></td>
+                    <td>{{service.name}}</td>
+                    <td>{{service.phone}}</td>
+                    <td>{{service.type_of_service}}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+       </div>
+       <div class="col">
+           
+       </div>
+    </div>
+</div>

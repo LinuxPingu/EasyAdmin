@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore, addDoc, collectionData} from '@angular/fire/firestore';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { collection, query, where, getDocs, doc, getDoc  } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc, deleteDoc  } from "firebase/firestore";
 import { object } from 'rxfire/database';
 import { map, Observable } from 'rxjs';
 import { Condo } from '../interfaces/condo.interface';
@@ -52,6 +52,12 @@ export class CondosServiceService {
       let promise:Promise<Condo[]> = this.get_user_condos(uid); 
      }
    })
+
+   delete_Condo(id:string){
+      const condoDocRef = doc(this.firestore,`condos/${id}`)
+      return deleteDoc(condoDocRef);
+   }
+
 
    findAll(owner:string): Observable<Condo[]>{
     return this.angularFs.collection('condos', ref => ref.where('owner_id','==',owner)).get().pipe(map(result =>convertSnaps<Condo>(result)));

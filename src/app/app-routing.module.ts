@@ -21,7 +21,11 @@ const routes: Routes=[
   {
     path:'condos',
     loadChildren:() => import('./condos/condos.module').then(m => m.CondosModule)
+  },{
+    path:'my-services',
+    loadChildren:() => import('./condo-services/condo-services.module').then(m => m.CondoServicesModule)
   }
+
 ];
 
 @NgModule({
