@@ -1,5 +1,5 @@
 export interface ServiceInterface {
-    service_id?:string,
+    service_id:string,
     condo_id:string,
     type_of_service:string,
     name:string,

@@ -35,12 +35,34 @@ export class CondoServicesService {
     return this.angularFs.collection('services', ref => ref.where('condo_id','==',condo_id)).get().pipe(map(result =>convertSnaps<ServiceInterface>(result)));
    }
 
-   build_user_data(owner:string){
+   
+  async set_doc_id(service:ServiceInterface,condo:string):Promise<ServiceInterface>{
+    const userRef = collection(this.firestore,'users');
+    const q = query(userRef, where("name","==",service.name),where("condo_id","==",service.condo_id));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      if(doc.get('name') === service.name && doc.get('condo_id') === service.condo_id){
+        service.service_id = doc.id.toString();
+        console.log("Service completed: ")
+        console.log(service)
+      }
+   });
+   
+   return service;
+  }
+
+    build_user_data(owner:string){
      this.get_user_condos(owner);
      if(this.all_services != null){
       this.condos_by_owner.forEach(cur_condo => {    
         if(cur_condo.id != null){
           this.find_All_Services(cur_condo.id).subscribe((val) => { 
+            let services_with_id:ServiceInterface[]=[]
+            val.forEach(element => {
+              if(cur_condo.id != null){
+               this.set_doc_id(element,cur_condo.id).then( (x)=>{services_with_id.push(x)})
+              }
+            });
             let new_bundle:CondoServiceItemInterface ={
               condo: cur_condo,
               services: val
@@ -58,6 +80,12 @@ export class CondoServicesService {
      this.condos_by_owner = []
      this.all_services=[]
      this.service_items=[]
+   }
+
+
+   delete_service(id:string){
+    const serviceDocRef = doc(this.firestore,`services/${id}`)
+    return deleteDoc(serviceDocRef);
    }
 
    get_current_services(owner:string):Observable<CondoServiceItemInterface[]>{
