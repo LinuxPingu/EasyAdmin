@@ -17,6 +17,7 @@ import { CondosModule } from './condos/condos.module';
 import { NavbarModule } from './shared/navbar.module';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
+import { LandingAdminComponent } from './landing-admin/landing-admin.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
     LoginComponent,
     RegisterComponent,
     LandingPageComponent,
+    LandingAdminComponent,
    
   ],
   imports: [

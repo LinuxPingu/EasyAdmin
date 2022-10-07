@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CondosServiceService } from './condos.service.service';
 import { Firestore, addDoc, collectionData} from '@angular/fire/firestore';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { collection, query, where, getDocs, doc, getDoc, deleteDoc  } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc, deleteDoc, updateDoc } from "firebase/firestore";
 import { object } from 'rxfire/database';
 import { from, map, Observable, of } from 'rxjs';
 import { Condo } from '../interfaces/condo.interface';
@@ -11,6 +11,8 @@ import { convertSnaps } from './db-utils';
 import { ServiceInterface } from '../interfaces/service.interface';
 import { Form } from '@angular/forms';
 import { CondoServiceItemInterface } from '../interfaces/condo-service-item.interface';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +37,38 @@ export class CondoServicesService {
     return this.angularFs.collection('services', ref => ref.where('condo_id','==',condo_id)).get().pipe(map(result =>convertSnaps<ServiceInterface>(result)));
    }
 
+   async get_service(name:string,condo:Condo):Promise<ServiceInterface>{
+    let completed_service:ServiceInterface = {
+      service_id: '',
+      condo_id: '',
+      type_of_service: '',
+      name: '',
+      email: '',
+      phone: '',
+      is_all_day: false,
+      starts: '',
+      ends: ''
+    }
+    
+    const q = query(collection(this.firestore,'services'),where('condo_id','==',condo.id),where('name','==',name))
+    const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+      if(doc.get('name') === name && doc.get('condo_id') === condo.id){
+        completed_service.service_id = doc.id.toString();
+        completed_service.condo_id = doc.get('condo_id');
+        completed_service.type_of_service = doc.get('type_of_service');
+        completed_service.name = doc.get('name');
+        completed_service.email = doc.get('email');
+        completed_service.phone = doc.get('phone');
+        completed_service.is_all_day = doc.get('is_all_day');
+        completed_service.starts = doc.get('starts');
+        completed_service.ends = doc.get('ends');
+        console.log("Completed service!")
+        console.log(completed_service);
+      }
+   });
+    return completed_service   
+   }
    
   async set_doc_id(service:ServiceInterface,condo:string):Promise<ServiceInterface>{
     const userRef = collection(this.firestore,'users');
@@ -129,13 +163,26 @@ export class CondoServicesService {
      let prom = this.set_document_id(name,condo)
      prom.then((x)=>{
         id = x.service_id
+        console.log(`id service: ${x.service_id}`)
      })
      return id;
    }
 
-   edit_service(service_name:string,condo:Condo,new_Values:ServiceInterface){
-     const tutorialsRef = this.angularFs.collection('services');
-     tutorialsRef.doc(this.get_service_id(service_name,condo)).update({ name: 'this a test of edit' });
+   async edit_service(service_name:string,condo:Condo,new_Values:ServiceInterface){
+    let prom = this.set_document_id(service_name,condo)
+    prom.then((x)=>{
+       console.log(`id service: ${x.service_id}`)
+       this.angularFs.collection("services").doc(x.service_id).update({
+        condo_id: new_Values.condo_id,
+        type_of_service:new_Values.type_of_service,
+        name:new_Values.name,
+        email:new_Values.email,
+        phone:new_Values.phone,
+        is_all_day:new_Values.is_all_day,
+        starts:new_Values.starts,
+        ends:new_Values.ends
+      })
+    })
    }
 
    get_current_services(owner:string):Observable<CondoServiceItemInterface[]>{

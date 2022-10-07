@@ -104,7 +104,61 @@
           </div>
           </form>
         </div>
-        <div *ngIf="!isEditing" >
+        <div *ngIf="isEditing" >
+          <h2> Update a Service </h2>
+          <form #contactForm="ngForm" (ngSubmit)="sendEdit(contactForm)">
+            <div class="mb-4">
+              <label for="condo" class="form-label"> Select a condo: </label>
+              <select name="condo" id="condo" class="form-select form-select-sm" title="condo" [(ngModel)]="model.condo_id">
+                <option selected disabled> Select an option </option>
+                <option *ngFor="let condo of user_condos" [value]="condo.id">{{condo.name}}</option>
+             </select>
+           </div>
+           <div class="mb-4">
+            <label for="name" class="form-label"> Service Name: </label>
+            <input id="name" type="text" class="form-control" name="name" [(ngModel)]="model.name" required #name="ngModel">
+            <p [hidden]="name.valid || name.pristine" class="alert alert-danger nt-1">wrong</p>
+           </div>
+           <div class="mb-4">
+            <label for="email" class="form-label"> Service Email: </label>
+            <input id="email" type="text" class="form-control" name="email" [(ngModel)]="model.email" required #email="ngModel">
+            <p [hidden]="email.valid || email.pristine" class="alert alert-danger nt-1">wrong</p>
+           </div>
+           <div class="mb-4">
+            <label for="phone" class="form-label"> Service Phone: </label>
+            <input id="phone" type="text" class="form-control" name="phone" [(ngModel)]="model.phone" required #phone="ngModel">
+            <p [hidden]="phone.valid || phone.pristine" class="alert alert-danger nt-1">wrong</p>
+           </div>
+           <div class="mb-4">
+            <label for="type_of_service" class="form-label"> Type of service: </label>
+            <select name="type_of_service" id="type_of_service" class="form-select form-select-sm" title="type_of_service" [(ngModel)]="model.type_of_service">
+              <option selected disabled> Select an option </option>
+              <option value="Electrical-Repair">Electrical-Repair</option>
+              <option value="House-Repair">House-Repair</option>
+              <option value="Cleaning">Cleaning</option>
+              <option value="Nanny">Nanny</option>
+           </select>
+         </div>
+           <div class="mb-4">
+            <label for="isAll" class="form-label"> Is All Day: </label>
+            <input id="isAll" type="checkbox" class="form-check-input" name="isAll" style="margin: 5px;" [(ngModel)]="model.is_all_day">
+           </div>
+           <div *ngIf="!model.is_all_day" class="mb-4">
+            <div>
+              <label for="starts" class="form-label"> Service Starts: </label>
+              <input id="starts" type="starts" class="form-control" name="starts" [(ngModel)]="model.starts" required #starts="ngModel">
+              <p [hidden]="starts.valid || starts.pristine" class="alert alert-danger nt-1">wrong</p>
+            </div>
+            <div>
+              <label for="ends" class="form-label"> Service Ends: </label>
+              <input id="ends" type="ends" class="form-control" name="ends" [(ngModel)]="model.ends" required #ends="ngModel">
+              <p [hidden]="ends.valid || ends.pristine" class="alert alert-danger nt-1">wrong</p>
+            </div>
+           </div>
+           <div style="text-align: center;">
+            <button class="btn btn-primary" style="background-color: #d1cf45; margin-top: 30px;margin-bottom: 20px;" type="submit" [disabled]="contactForm.invalid"><i class="fa-solid fa-plus"></i> Update Service </button>
+          </div>
+          </form>
         </div>
       </div>
     </div>

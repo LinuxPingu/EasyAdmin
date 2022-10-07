@@ -47,4 +47,11 @@ export class MyCondosComponent implements OnInit {
       })
     }
   }
+
+   editing_is_emited(eventData: {isEditng: boolean, selected:Condo}){
+      console.log("Emited values")
+      console.log(eventData.selected)
+      this.isEditing = eventData.isEditng;
+      this.model = eventData.selected;
+   }
 }

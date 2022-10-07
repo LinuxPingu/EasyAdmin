@@ -1,0 +1,12 @@
+.centertxt{
+    text-align: center;
+}
+
+.condosList{
+    align-self: center;
+    margin: 5px;
+}
+
+.miniCol{
+    align-items: center;
+}

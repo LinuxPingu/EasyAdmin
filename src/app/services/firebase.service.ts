@@ -2,19 +2,23 @@ import { Injectable } from '@angular/core';
 import { Firestore, addDoc, collectionData} from '@angular/fire/firestore';
 import { collection, query, where, getDocs, doc, getDoc  } from "firebase/firestore";
 import { object } from 'rxfire/database';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import User from '../interfaces/user.interface';
+import { RequestsInterface } from '../interfaces/requests.interface';
+import { Condo } from '../interfaces/condo.interface';
+import { CondosServiceService } from './condos.service.service';
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
-  constructor(private firestore: Firestore) { }
+  constructor(private firestore: Firestore, private condo_service:CondosServiceService) { }
 
-  addNewUser(user:User){
-    const userRef = collection(this.firestore,'users');
-    return addDoc(userRef,user);
-  }
+   addNewUser(user:User){
+     const userRef = collection(this.firestore,'users');
+     return addDoc(userRef,user);
+   }
+
 
   async getUserByEmail(email:string):Promise<User>{
 
@@ -42,10 +46,11 @@ export class FirebaseService {
    
    return foundUser;
   }
-
-  getUsers():Observable<User[]>{
+   
+   getUsers():Observable<User[]>{
     const userRef = collection(this.firestore,'users');
     return collectionData(userRef,{idField:'userID'}) as Observable<User[]>;
   }
+
 
 }

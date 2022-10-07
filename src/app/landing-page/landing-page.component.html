@@ -1,2 +1,8 @@
 <app-global-navbar></app-global-navbar>
-<p>landing-page works!</p>
+<div class="container">
+ <div class="row">
+    <div *ngIf="curUser.isAdmin" class="col">
+      <app-landing-admin></app-landing-admin>
+    </div>
+ </div>
+</div>

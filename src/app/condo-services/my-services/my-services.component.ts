@@ -17,7 +17,7 @@ export class MyServicesComponent implements OnInit {
   service_by_hash:CondoServiceItemInterface[]= [];
   user_condos:Condo[]=[]
 
-  public sub = interval(5000).subscribe(x =>{
+  public sub = interval(1000).subscribe(x =>{
     let uid = localStorage.getItem('current-user')
     if(uid != null){
      this.condos_services.get_current_services(uid).subscribe((val) => {this.service_by_hash = val})
@@ -26,9 +26,17 @@ export class MyServicesComponent implements OnInit {
   });
   
 
-  isEditing:boolean =false;
-
-  model:ServiceInterface ={
+   isEditing:boolean =false;
+   editing_service:string ="";
+   editing_Condo:Condo ={
+     email: '',
+     isActive: false,
+     location: '',
+     name: '',
+     owner_id: '',
+     phone: ''
+   }
+   model:ServiceInterface ={
     condo_id: '',
     type_of_service: '',
     name: '',
@@ -38,7 +46,7 @@ export class MyServicesComponent implements OnInit {
     starts: '',
     ends: '',
     service_id: ''
-  }
+   }
 
   ngOnInit(): void {
     let uid = localStorage.getItem('current-user')
@@ -66,9 +74,58 @@ export class MyServicesComponent implements OnInit {
    }
   }
 
-  editService(name:string, condo:Condo){
+   editService(name:string, condo:Condo){
+     this.isEditing = true;
+     this.editing_service=name;
+     this.editing_Condo=condo;
+     let promise =  this.condos_services.get_service(name,condo);
+     promise.then(x =>{ this.model = x})
+   }
 
-  }
+   sendEdit(contactForm:any){
+     try {
+      this.condos_services.edit_service(this.editing_service,this.editing_Condo,this.model)
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `Service ${this.model.name} updated! `,
+        showConfirmButton: false,
+        timer: 1500
+       })
+      let emptyCondo:Condo ={
+        email: '',
+        isActive: false,
+        location: '',
+        name: '',
+        owner_id: '',
+        phone: ''
+      }
+
+      let emptyService:ServiceInterface ={
+        condo_id: '',
+        type_of_service: '',
+        name: '',
+        email: '',
+        phone: '',
+        is_all_day: true,
+        starts: '',
+        ends: '',
+        service_id: ''
+       }
+
+       this.isEditing = false;
+       this.editing_service ="";
+       this.editing_Condo=emptyCondo;
+       this.model = emptyService
+       
+     } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+     }
+   }
   
    deleteService(name:string, condo:Condo){
      console.log(`Here! ${name} and ${condo.id}`)

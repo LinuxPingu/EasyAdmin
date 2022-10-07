@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
       <div class="col">
-        <app-condos-list></app-condos-list>
+        <app-condos-list (isEditing)=editing_is_emited($any($event))></app-condos-list>
       </div>
       <div *ngIf="!isEditing" class="col miniCol">
         <h2 class="centertxt"> Create a Condo </h2>
