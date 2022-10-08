@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+       <div *ngIf="isFound" class="col">
+         <div class="mb-4">
+              <h2 class="centertxt"> Your Condo </h2>
+         </div>
+       </div>
+       <div *ngIf="!isFound" class="col">
+        <div style="margin: 10px;" class="mb-4">
+          <h2 class="centertxt"> Your Condo </h2>
+          <h3 style="margin-top: 50px;"class="centertxt" style="margin: 5px;">Looks like you are not in a condo! </h3>
+          <button style="margin: 50px;" type="button" class="btn btn-primary"><i class="fa-solid fa-house"></i> Register to one now! </button>
+          </div>
+       </div>
+    </div>
+</div>
+

@@ -17,17 +17,18 @@ export class LandingAdminComponent implements OnInit {
 
   public sub = interval(3000).subscribe(x =>{
     let uid = localStorage.getItem('current-user')
+    console.log(`Current user ${uid}`)
+
     if(uid != null){
-     /*this.user_service.get_current_requests(uid).subscribe((val) => { console.log(val); this.untreated = val})*/
       this.req_service.sync_requests(uid).subscribe((val)=>{console.log("On init:"); this.itemList = val; console.log(this.itemList)})
     }
    });
 
-  ngOnInit(): void {
-    let uid = localStorage.getItem('current-user')
-    if(uid != null){
-
-    }
-  }
+   ngOnInit(): void {
+   
+   }
+   public ngOnDestroy() {
+    this.sub.unsubscribe();
+   }
 
 }

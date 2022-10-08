@@ -18,6 +18,7 @@ import { NavbarModule } from './shared/navbar.module';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { LandingAdminComponent } from './landing-admin/landing-admin.component';
+import { LandingUserComponent } from './landing-user/landing-user.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { LandingAdminComponent } from './landing-admin/landing-admin.component';
     RegisterComponent,
     LandingPageComponent,
     LandingAdminComponent,
+    LandingUserComponent,
    
   ],
   imports: [

@@ -4,5 +4,8 @@
     <div *ngIf="curUser.isAdmin" class="col">
       <app-landing-admin></app-landing-admin>
     </div>
+    <div *ngIf="!curUser.isAdmin" class="col">
+      <app-landing-user></app-landing-user>
+    </div>
  </div>
 </div>
